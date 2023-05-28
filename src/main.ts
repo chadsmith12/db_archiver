@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { archive } from "./postgres.js";
 
 const program = new Command()
                   .name("DB Archiver")
@@ -7,12 +8,9 @@ const program = new Command()
 program.command('archive')
        .description("Creates an archive/backup of the database given")
        .argument('<string>', 'name of backup')
-       .option('--host', 'host of the database')
-       .option('--user', 'username to use to connect')
-       .option('--password', 'password of the user to connect')
-       .action((str, options) => {
-        console.log(options)
-        console.log(str)
-       })
+       .requiredOption('--host <string>', 'host of the database')
+       .requiredOption('--user <string>', 'username to use to connect')
+       .requiredOption('--password <string>', 'password of the user to connect')
+       .action(archive)
 
 program.parse();
